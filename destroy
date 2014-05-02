@@ -1,0 +1,14 @@
+#!/bin/bash
+
+. config.sh
+. functions.sh
+
+if [ -z "$1" ]
+then
+  echo "Usage: destroy <snapshot name>"
+  exit 1
+fi
+
+snapshot_exists "/dev/$VG/$1"
+check_user
+destroy $1
