@@ -1,9 +1,11 @@
 #!/bin/bash
 
+# Return the active LVM snapshot.
 active() {
   return `readlink /var/lib/mysql`
 }
 
+# Make sure we're running as root.
 check_user() {
   if [ $EUID -gt 0 ]
   then
@@ -12,18 +14,21 @@ check_user() {
   fi
 }
 
+# Branch a new database from the master database.
 branch() {
   lvcreate -s -n $1 "/dev/$VG/master"
   mkdir -p "$VG_PATH/$1"
   mount "/dev/$VG/$1" "$VG_PATH/$1"
 }
 
+# Destroy a database snapshot.
 destroy() {
   umount "$VG_PATH/$1"
   rmdir "$VG_PATH/$1"
   lvremove "$VG/$1"
 }
 
+# Determine if a database snapshot exists.
 snapshot_exists() {
   if [[ ! -a "$1" ]]
   then
@@ -32,6 +37,7 @@ snapshot_exists() {
   fi
 }
 
+# Determine if a database snapshot can be made.
 snapshot_available() {
   if [[ -a "$1" ]]
   then
@@ -40,6 +46,7 @@ snapshot_available() {
   fi
 }
 
+# Determine if a snapshot is active.
 snapshot_active() {
   if [ `active` == "$VG_PATH/master" ]
   then
@@ -49,6 +56,7 @@ snapshot_active() {
   return 1
 }
 
+# Change the currently active database.
 switch() {
   echo `active` "is the currently active database."
   service mysql stop
