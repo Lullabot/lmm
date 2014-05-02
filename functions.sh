@@ -1,10 +1,7 @@
 #!/bin/bash
 
-branch() {
-  lvcreate -s -n $1 -L2G mysql/master
-  mkdir -p $VG_PATH/$1
-  mount /dev/mysql/$1 $VG_PATH/$1
-  ./switch-db.sh $1
+active() {
+  return `readlink /var/lib/mysql`
 }
 
 check_user() {
@@ -13,6 +10,18 @@ check_user() {
     echo "This script must be run as root."
     exit 1
   fi
+}
+
+branch() {
+  lvcreate -s -n $1 "/dev/$VG/master"
+  mkdir -p "$VG_PATH/$1"
+  mount "/dev/$VG/$1" "$VG_PATH/$1"
+}
+
+destroy() {
+  umount "$VG_PATH/$1"
+  rmdir "$VG_PATH/$1"
+  lvremove "$VG/$1"
 }
 
 snapshot_exists() {
@@ -32,11 +41,19 @@ snapshot_available() {
 }
 
 snapshot_active() {
-  LINK=`readlink /var/lib/mysql`
-  if [ "$LINK" == "$VG_PATH/master" ]
+  if [ `active` == "$VG_PATH/master" ]
   then
     return 0
   fi
 
   return 1
+}
+
+switch() {
+  echo `active` "is the currently active database."
+  service mysql stop
+  echo "Setting $VG_PATH/$1 as the active database."
+  rm /var/lib/mysql
+  ln -s $VG_PATH/$1 /var/lib/mysql
+  service mysql start
 }
