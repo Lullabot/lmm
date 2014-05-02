@@ -6,7 +6,7 @@ then
   exit 1
 fi
 
-if [[ ! -a "/mysql/$1" ]]
+if [[ ! -a "$VG_PATH/$1" ]]
 then
   echo "Snapshot $1 does not appear to exist."
   exit 1
@@ -19,7 +19,7 @@ then
 fi
 
 LINK=`readlink /var/lib/mysql`
-if [ "$LINK" == "/mysql/$1" ]
+if [ "$LINK" == "$VG_PATH/$1" ]
 then
   echo "$1 is already the currently active database."
   exit 1
@@ -27,7 +27,7 @@ fi
 
 echo $LINK "is the currently active database."
 service mysql stop
-echo "Setting /mysql/$1 as the active database."
+echo "Setting $VG_PATH/$1 as the active database."
 rm /var/lib/mysql
-ln -s /mysql/$1 /var/lib/mysql
+ln -s $VG_PATH/$1 /var/lib/mysql
 service mysql start
