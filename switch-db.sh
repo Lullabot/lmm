@@ -1,22 +1,16 @@
 #!/bin/bash
 
+. config.sh
+. functions.sh
+
 if [ -z "$1" ]
 then
   echo "Usage: switch-db <snapshot name>"
   exit 1
 fi
 
-if [[ ! -a "$VG_PATH/$1" ]]
-then
-  echo "Snapshot $1 does not appear to exist."
-  exit 1
-fi
-
-if [ $UID -gt 0 ]
-then
-  echo "This script must be run as root."
-  exit 1
-fi
+check_user
+snapshot_exists "$VG_PATH/$1"
 
 LINK=`readlink /var/lib/mysql`
 if [ "$LINK" == "$VG_PATH/$1" ]

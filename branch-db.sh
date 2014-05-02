@@ -1,6 +1,7 @@
 #!/bin/bash
 
 . config.sh
+. functions.sh
 
 if [ -z "$1" ]
 then
@@ -8,11 +9,7 @@ then
   exit 1
 fi
 
-if [[ -a "$VG_PATH/$1" ]]
-then
-  echo "Snapshot $1 already exists."
-  exit 1
-fi
+snapshot_available "$VG_PATH/$1"
 
 if [ $UID -gt 0 ]
 then
