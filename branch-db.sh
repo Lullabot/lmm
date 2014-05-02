@@ -10,12 +10,7 @@ then
 fi
 
 snapshot_available "$VG_PATH/$1"
-
-if [ $UID -gt 0 ]
-then
-  echo "This script must be run as root."
-  exit 1
-fi
+check_user
 
 LINK=`readlink /var/lib/mysql`
 if [ "$LINK" == "$VG_PATH/master" ]
