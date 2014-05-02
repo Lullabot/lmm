@@ -9,6 +9,12 @@ then
   exit 1
 fi
 
+if [ "$1" == "master" ]
+then
+  echo "The master database may not be destroyed."
+  exit 1
+fi
+
 snapshot_exists "/dev/$VG/$1"
 check_user
 destroy $1
