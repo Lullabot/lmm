@@ -2,7 +2,7 @@
 
 # Return the active LVM snapshot.
 active() {
-  return `readlink /var/lib/mysql`
+  echo `readlink /var/lib/mysql`
 }
 
 # Make sure we're running as root.
@@ -48,7 +48,7 @@ snapshot_available() {
 
 # Determine if a snapshot is active.
 snapshot_active() {
-  if [ `active` == "$VG_PATH/$1" ]
+  if [[ "$(active)" == "$VG_PATH/$1" ]]
   then
     return 0
   fi
