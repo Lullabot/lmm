@@ -9,10 +9,11 @@ then
   exit 1
 fi
 
-check_user
 snapshot_exists "$VG_PATH/$1"
+check_user
 
-if [ active == "$VG_PATH/$1" ]
+snapshot_active $1
+if [ $? -eq 0 ]
 then
   echo "$1 is already the currently active database."
   exit 1
