@@ -48,7 +48,7 @@ snapshot_available() {
 
 # Determine if a snapshot is active.
 snapshot_active() {
-  if [ `active` == "$VG_PATH/master" ]
+  if [ `active` == "$VG_PATH/$1" ]
   then
     return 0
   fi
