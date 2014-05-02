@@ -9,7 +9,7 @@ then
   exit 1
 fi
 
-snapshot_exists "$VG_PATH/$1"
+snapshot_exists "/dev/$VG/$1"
 check_user
 
 snapshot_active $1

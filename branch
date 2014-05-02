@@ -9,6 +9,6 @@ then
   exit 1
 fi
 
-snapshot_available "$VG_PATH/$1"
+snapshot_available "/dev/$VG/$1"
 check_user
 branch $1
