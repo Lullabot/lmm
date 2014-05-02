@@ -16,5 +16,13 @@ then
 fi
 
 snapshot_exists "/dev/$VG/$1"
+
+snapshot_active $1
+if [ $? -eq 0 ]
+then
+  echo "The active snapshot $1 can not be destroyed."
+  exit 1
+fi
+
 check_user
 destroy $1

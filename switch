@@ -15,7 +15,7 @@ check_user
 snapshot_active $1
 if [ $? -eq 0 ]
 then
-  echo "$1 is already the currently active database."
+  echo "$1 is the currently active database."
   exit 1
 fi
 
