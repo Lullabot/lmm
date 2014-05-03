@@ -1,8 +1,11 @@
 #!/bin/bash
 
-pushd `dirname $0` > /dev/null
-export LMM_ROOT=`pwd -P`
-popd > /dev/null
+if [ ! -L $0 ]
+then
+  export LMM_ROOT="$(cd "$(dirname "$0")" && pwd)"
+else
+  export LMM_ROOT="$(dirname "$(readlink -f "$0")")"
+fi
 
 if [ -z "$1" ]
 then
