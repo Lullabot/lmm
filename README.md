@@ -60,7 +60,7 @@ Database snapshots:
   fancy-feature
   master
 vagrant@vagrant-ubuntu-trusty-32:~$ sudo lmm destroy fancy-feature
-Do you really want to remove and DISCARD active logical volume fancy-feature? [y/n]: y
+Are you sure you want to DESTROY fancy-feature (y/n)? y
   Logical volume "fancy-feature" successfully removed
 vagrant@vagrant-ubuntu-trusty-32:~$ sudo lmm list
 Active snapshot: /mysql/master
