@@ -10,6 +10,18 @@ Primary Features
 * Instant switching of the active MySQL database.
 * Automatic handling of LVM snapshot management.
 
+Quick start
+-----------
+
+Run ```lmm``` to see the available commands.
+
+Setup
+-----
+
+The easiest way to get going is to use Lullabot/trusty32-lamp which includes
+these commands. Otherwise, these scripts expect a thinly-provisioned LVM
+volume named "master" in a "mysql" volume group.
+
 Examples
 --------
 
