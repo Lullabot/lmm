@@ -9,7 +9,7 @@ active() {
 check_user() {
   if [ $EUID -gt 0 ]
   then
-    echo "This script must be run as root."
+    echo "Linux MySQL Manager must be run as root."
     exit 1
   fi
 }
