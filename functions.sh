@@ -27,7 +27,7 @@ destroy() {
   umount "$VG_PATH/$1"
   rmdir "$VG_PATH/$1"
   fstab_rm $1
-  lvremove "$VG/$1"
+  lvremove -f "$VG/$1"
 }
 
 fstab_definition() {

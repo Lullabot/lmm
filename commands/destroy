@@ -25,4 +25,10 @@ then
 fi
 
 check_user
-destroy $1
+
+read -p "Are you sure you want to DESTROY $1 (y/n)? " -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+  destroy $1
+fi
