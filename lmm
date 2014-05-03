@@ -1,0 +1,14 @@
+#!/bin/bash
+
+pushd `dirname $0` > /dev/null
+export LMM_ROOT=`pwd -P`
+popd > /dev/null
+
+if [ -z "$1" ]
+then
+  COMMANDS=`ls $LMM_ROOT/commands | sed ':a;N;$!ba;s/\n/ | /g'`
+  echo "Usage: lmm [ $COMMANDS ]"
+  exit 1
+fi
+
+$LMM_ROOT/commands/$*
