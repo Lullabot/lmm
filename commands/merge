@@ -1,0 +1,27 @@
+#!/bin/bash
+
+. $LMM_ROOT/config.sh
+. $LMM_ROOT/functions.sh
+
+if [ -z "$1" ]
+then
+  echo "Usage: merge <snapshot name>"
+  exit 1
+fi
+
+if [ "$1" == "master" ]
+then
+  echo "The master database may not be merged to itself."
+  exit 1
+fi
+
+snapshot_exists "/dev/$VG/$1"
+
+check_user
+
+read -p "Are you sure you want to MERGE $1 into master (y/n)? " -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+  merge $1
+fi

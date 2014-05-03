@@ -43,6 +43,18 @@ fstab_rm() {
   mv /tmp/lmm_fstab /etc/fstab
 }
 
+merge() {
+  service mysql stop
+  umount "$VG_PATH/$1"
+  umount "$VG_PATH/master"
+  rmdir "$VG_PATH/$1"
+  fstab_rm $1
+  lvconvert --merge -i 1 "$VG/$1"
+  mount -a
+  switch master
+  service mysql start
+}
+
 # Determine if a database snapshot exists.
 snapshot_exists() {
   if [[ ! -a "$1" ]]
