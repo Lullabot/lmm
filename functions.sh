@@ -18,14 +18,29 @@ check_user() {
 branch() {
   lvcreate -s -n $1 "/dev/$VG/master"
   mkdir -p "$VG_PATH/$1"
-  mount "/dev/$VG/$1" "$VG_PATH/$1"
+  fstab_add $1
+  mount -a
 }
 
 # Destroy a database snapshot.
 destroy() {
   umount "$VG_PATH/$1"
   rmdir "$VG_PATH/$1"
+  fstab_rm $1
   lvremove "$VG/$1"
+}
+
+fstab_definition() {
+  echo -e "/dev/$VG/$1\t/$VG/$1\text4\tdefaults\t0\t0" "# MySQL database added by LMM"
+}
+
+fstab_add() {
+  echo "$(fstab_definition $1)" >> /etc/fstab
+}
+
+fstab_rm() {
+  grep -v "$(fstab_definition $1)" /etc/fstab > /tmp/lmm_fstab
+  mv /tmp/lmm_fstab /etc/fstab
 }
 
 # Determine if a database snapshot exists.
