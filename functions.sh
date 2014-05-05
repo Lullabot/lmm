@@ -16,10 +16,12 @@ check_user() {
 
 # Branch a new database from the master database.
 branch() {
+  service mysql stop
   lvcreate -s -n $1 "/dev/$VG/master"
   mkdir -p "$VG_PATH/$1"
   fstab_add $1
   mount -a
+  service mysql start
 }
 
 # Destroy a database snapshot.
