@@ -25,7 +25,7 @@ branch() {
 }
 
 # Destroy a database snapshot.
-destroy() {
+delete() {
   umount "$VG_PATH/$1"
   rmdir "$VG_PATH/$1"
   fstab_rm $1

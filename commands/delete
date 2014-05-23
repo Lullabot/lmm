@@ -5,13 +5,13 @@
 
 if [ -z "$1" ]
 then
-  echo "Usage: destroy <snapshot name>"
+  echo "Usage: delete <snapshot name>"
   exit 1
 fi
 
 if [ "$1" == "master" ]
 then
-  echo "The master database may not be destroyed."
+  echo "The master database may not be deleted."
   exit 1
 fi
 
@@ -20,15 +20,15 @@ snapshot_exists "/dev/$VG/$1"
 snapshot_active $1
 if [ $? -eq 0 ]
 then
-  echo "The active snapshot $1 can not be destroyed."
+  echo "The active snapshot $1 can not be deleted."
   exit 1
 fi
 
 check_user
 
-read -p "Are you sure you want to DESTROY $1 (y/n)? " -n 1 -r
+read -p "Are you sure you want to DELETE $1 (y/n)? " -r
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
-  destroy $1
+  delete $1
 fi

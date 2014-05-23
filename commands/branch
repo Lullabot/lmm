@@ -5,8 +5,15 @@
 
 if [ -z "$1" ]
 then
-  echo "Usage: branch <snapshot name>"
+  echo "Usage: branch [-d] <snapshot name>"
   exit 1
+fi
+
+# Support git style branch -d.
+if [ "$1" == "-d" ]
+then
+  $LMM_ROOT/commands/delete $2
+  exit
 fi
 
 snapshot_available "/dev/$VG/$1"
