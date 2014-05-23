@@ -26,14 +26,14 @@ Examples
 --------
 
 ```bash
-vagrant@vagrant-ubuntu-trusty-32:~$ sudo lmm list
+vagrant@vagrant-ubuntu-trusty-32:~$ sudo lmm status
 Active snapshot: /mysql/master
 
 Database snapshots:
   master
 vagrant@vagrant-ubuntu-trusty-32:~$ sudo lmm branch fancy-feature
   Logical volume "fancy-feature" created
-vagrant@vagrant-ubuntu-trusty-32:~$ sudo lmm list
+vagrant@vagrant-ubuntu-trusty-32:~$ sudo lmm status
 Active snapshot: /mysql/master
 
 Database snapshots:
@@ -65,7 +65,7 @@ information_schema
 lost+found
 mysql
 performance_schema
-vagrant@vagrant-ubuntu-trusty-32:~$ sudo lmm list
+vagrant@vagrant-ubuntu-trusty-32:~$ sudo lmm status
 Active snapshot: /mysql/master
 
 Database snapshots:
@@ -74,13 +74,9 @@ Database snapshots:
 vagrant@vagrant-ubuntu-trusty-32:~$ sudo lmm destroy fancy-feature
 Are you sure you want to DESTROY fancy-feature (y/n)? y
   Logical volume "fancy-feature" successfully removed
-vagrant@vagrant-ubuntu-trusty-32:~$ sudo lmm list
+vagrant@vagrant-ubuntu-trusty-32:~$ sudo lmm status
 Active snapshot: /mysql/master
 
 Database snapshots:
   master
-* branch
-* list
-* switch
-* destroy
 vagrant@vagrant-ubuntu-trusty-32:~$
