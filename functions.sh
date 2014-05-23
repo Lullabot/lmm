@@ -5,6 +5,11 @@ active() {
   echo `readlink /var/lib/mysql`
 }
 
+# Return the device node that is mounted on a given path.
+device() {
+  df "$1" | tail -1 | awk '{ print $1 }'
+}
+
 # Make sure we're running as root.
 check_user() {
   if [ $EUID -gt 0 ]
@@ -16,8 +21,9 @@ check_user() {
 
 # Branch a new database from the master database.
 branch() {
+  DEVICE=`device "$(active)"`
   service mysql stop
-  lvcreate -s -n $1 "/dev/$VG/master"
+  lvcreate -s -n $1 "$DEVICE"
   mkdir -p "$VG_PATH/$1"
   fstab_add $1
   mount -a
