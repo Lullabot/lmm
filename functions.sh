@@ -38,6 +38,22 @@ delete() {
   lvremove -f "$VG/$1"
 }
 
+# Display the amount of free space in the thin pool.
+free() {
+  PCT=`lvs mysql/thinpool -odata_percent --noheadings --rows | cut -c 3-`
+  echo ""
+  echo "$PCT% used by MySQL databases."
+
+  WARN=`echo "$PCT > 80" | bc`
+  if [ $WARN -eq 1 ]
+  then
+    echo ""
+    echo "WARNING: If all free space is used, the system may hang."
+    echo "Delete snapshots or run fstrim-all to free space."
+    echo ""
+  fi
+}
+
 fstab_definition() {
   echo -e "/dev/$VG/$1\t/$VG/$1\text4\tdefaults\t0\t0" "# MySQL database added by LMM"
 }

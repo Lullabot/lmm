@@ -11,3 +11,5 @@ echo ""
 
 echo "Database snapshots:"
 lvs -o lv_name --noheadings | grep -v thinpool
+
+free
