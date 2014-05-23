@@ -10,8 +10,8 @@ Primary Features
 * Instant cloning of MySQL databases.
 * Instant checking out of a branched MySQL database.
 * Very quick merging of snapshots, using minimal disk space.
-** Note that this doesn't merge snapshot content, but replaces the content of
-   the current snapshot with another.
+  * Note that this doesn't merge snapshot content, but replaces the content of
+    the current snapshot with another.
 * Automatic handling of LVM snapshot management.
 
 Quick start
