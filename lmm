@@ -7,7 +7,7 @@ else
   export LMM_ROOT="$(dirname "$(readlink -f "$0")")"
 fi
 
-if [ -z "$1" ]
+if [ -z "$1" ] || [[ ! -a "$LMM_ROOT/commands/$1" ]]
 then
   COMMANDS=`ls $LMM_ROOT/commands | sed ':a;N;$!ba;s/\n/ | /g'`
   echo "Usage: lmm [ $COMMANDS ]"
