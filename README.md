@@ -1,13 +1,14 @@
 Logical MySQL Manager
 =====================
 
-A set of scripts for branching and switching active MySQL databases using LVM.
+A set of scripts for branching and checking out active MySQL databases using
+LVM.
 
 Primary Features
 ----------------
 
 * Instant cloning of MySQL databases.
-* Instant switching of the active MySQL database.
+* Instant checking out of a branched MySQL database.
 * Automatic handling of LVM snapshot management.
 
 Quick start
@@ -39,7 +40,7 @@ Active snapshot: /mysql/master
 Database snapshots:
   fancy-feature
   master
-vagrant@vagrant-ubuntu-trusty-32:~$ sudo lmm switch fancy-feature
+vagrant@vagrant-ubuntu-trusty-32:~$ sudo lmm checkout fancy-feature
 /mysql/master is the currently active database.
  * Stopping MariaDB database server mysqld                                       [ OK ]
 Setting /mysql/fancy-feature as the active database.
@@ -53,7 +54,7 @@ feature
 lost+found
 mysql
 performance_schema
-vagrant@vagrant-ubuntu-trusty-32:~$ sudo lmm switch master
+vagrant@vagrant-ubuntu-trusty-32:~$ sudo lmm checkout master
 /mysql/fancy-feature is the currently active database.
  * Stopping MariaDB database server mysqld                                       [ OK ]
 Setting /mysql/master as the active database.

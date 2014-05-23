@@ -74,7 +74,7 @@ snapshot_active() {
 }
 
 # Change the currently active database.
-switch() {
+checkout() {
   echo `active` "is the currently active database."
   service mysql stop
   echo "Setting $VG_PATH/$1 as the active database."
