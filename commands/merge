@@ -1,0 +1,15 @@
+#!/bin/bash
+
+. $LMM_ROOT/config.sh
+. $LMM_ROOT/functions.sh
+
+if [ -z "$1" ]
+then
+  echo "Usage: merge <snapshot name>"
+  exit 1
+fi
+
+snapshot_exists "/dev/$VG/$1"
+check_user
+
+merge "$VG_PATH/$1"

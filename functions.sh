@@ -54,6 +54,15 @@ snapshot_exists() {
   fi
 }
 
+# Merge a snapshot into the currently active snapshot.
+merge() {
+  echo "Merging $1 into $(active)"
+  service mysql stop
+  rsync -a --progress --delete-after "$1/" $(active)
+  service mysql start
+  fstrim $(active)
+}
+
 # Determine if a database snapshot can be made.
 snapshot_available() {
   if [[ -a "$1" ]]
