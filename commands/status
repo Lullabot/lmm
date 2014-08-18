@@ -5,7 +5,7 @@
 
 check_user
 
-echo "Active snapshot:" `active`
+echo "Active snapshot:" $(echo $(active) | sed "s/\/mysql\///")
 
 echo ""
 
