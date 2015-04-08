@@ -26,6 +26,19 @@ The easiest way to get going is to use https://github.com/Lullabot/trusty32-lamp
 which includes these commands. Otherwise, these scripts expect a
 thinly-provisioned LVM volume named "master" in a "mysql" volume group.
 
+LMM supports the following hooks in `/etc/lmm`. Each hook must be an executable
+file.
+
+* `post-checkout`
+
+An example `post-checkout` hook to clear memcache when switching databases:
+
+```sh
+#!/bin/bash
+
+echo 'flush_all' | nc 127.0.0.1 11211
+```
+
 Examples
 --------
 
