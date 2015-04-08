@@ -111,5 +111,9 @@ checkout() {
   echo "Setting $VG_PATH/$1 as the active database."
   rm /var/lib/mysql
   ln -s $VG_PATH/$1 /var/lib/mysql
+  if [[ -x "/etc/lmm/post-checkout" ]]
+  then
+    /etc/lmm/post-checkout
+  fi
   service mysql start
 }
