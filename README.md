@@ -24,7 +24,7 @@ Setup
 
 The easiest way to get going is to use https://github.com/Lullabot/trusty32-lamp
 which includes these commands. Otherwise, these scripts expect a
-thinly-provisioned LVM volume named "master" in a "mysql" volume group.
+thinly-provisioned LVM volume named "master" in a "vagrant-vg" volume group.
 
 LMM supports the following hooks in `/etc/lmm`. Each hook must be an executable
 file.
