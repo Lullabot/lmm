@@ -16,6 +16,6 @@ then
   exit
 fi
 
-snapshot_available "/dev/$VG/$1"
+snapshot_available "/dev/$VG/mysql-$1"
 check_user
 branch $1

@@ -9,7 +9,7 @@ then
   exit 1
 fi
 
-snapshot_exists "/dev/$VG/$1"
+snapshot_exists "/dev/$VG/mysql-$1"
 check_user
 
 merge "$VG_PATH/$1"

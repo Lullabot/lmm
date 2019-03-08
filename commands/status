@@ -10,6 +10,6 @@ echo "Active snapshot:" $(echo $(active) | sed "s/\/mysql\///")
 echo ""
 
 echo "Database snapshots:"
-lvs -o lv_name --noheadings | grep -v thinpool
+lvs -o lv_name --noheadings | grep -v thinpool | grep mysql- | sed 's/mysql-//'
 
-free
+free $VG
