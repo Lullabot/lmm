@@ -23,7 +23,7 @@ check_user() {
 branch() {
   DEVICE=`device "$(active)"`
   systemctl stop mysql
-  lvcreate -s -K -n mysql-$1 "$DEVICE"
+  lvcreate --setactivationskip n -s -K -n mysql-$1 "$DEVICE"
   mkdir -p "$VG_PATH/$1"
   fstab_add $1
   mount -a
