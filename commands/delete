@@ -15,7 +15,7 @@ then
   exit 1
 fi
 
-snapshot_exists "/dev/$VG/$1"
+snapshot_exists "/dev/$VG/mysql-$1"
 
 snapshot_active $1
 if [ $? -eq 0 ]

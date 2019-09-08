@@ -22,12 +22,12 @@ check_user() {
 # Branch a new database from the master database.
 branch() {
   DEVICE=`device "$(active)"`
-  service mysql stop
-  lvcreate -s -n $1 "$DEVICE"
+  systemctl stop mysql
+  lvcreate --setactivationskip n -s -K -n mysql-$1 "$DEVICE"
   mkdir -p "$VG_PATH/$1"
   fstab_add $1
   mount -a
-  service mysql start
+  systemctl start mysql
 }
 
 # Destroy a database snapshot.
@@ -35,12 +35,12 @@ delete() {
   umount "$VG_PATH/$1"
   rmdir "$VG_PATH/$1"
   fstab_rm $1
-  lvremove -f "$VG/$1"
+  lvremove -f "$VG/mysql-$1"
 }
 
 # Display the amount of free space in the thin pool.
 free() {
-  PCT=`lvs mysql/thinpool -odata_percent --noheadings --rows | cut -c 3-`
+  PCT=`lvs $1/thinpool -odata_percent --noheadings --rows | cut -c 3-`
   echo ""
   echo "$PCT% used by MySQL databases."
 
@@ -55,7 +55,7 @@ free() {
 }
 
 fstab_definition() {
-  echo -e "/dev/$VG/$1\t/$VG/$1\text4\tdefaults\t0\t0" "# MySQL database added by LMM"
+  echo -e "/dev/$VG/mysql-$1\t/$VG/$1\text4\tdefaults\t0\t0" "# MySQL database added by LMM"
 }
 
 fstab_add() {
@@ -79,9 +79,9 @@ snapshot_exists() {
 # Merge a snapshot into the currently active snapshot.
 merge() {
   echo "Merging $1 into $(active)"
-  service mysql stop
+  systemctl stop mysql
   rsync -a --progress --delete-after "$1/" $(active)
-  service mysql start
+  systemctl start mysql
   fstrim $(active)
 }
 
@@ -107,7 +107,7 @@ snapshot_active() {
 # Change the currently active database.
 checkout() {
   echo `active` "is the currently active database."
-  service mysql stop
+  systemctl stop mysql
   echo "Setting $VG_PATH/$1 as the active database."
   rm /var/lib/mysql
   ln -s $VG_PATH/$1 /var/lib/mysql
@@ -115,5 +115,5 @@ checkout() {
   then
     /etc/lmm/post-checkout
   fi
-  service mysql start
+  systemctl start mysql
 }
